@@ -7,24 +7,35 @@ public class PlayerController : MonoBehaviour
     public InputActionReference move;
     public Rigidbody rb;
 
-    private Vector2 _moveDirection;
+    private Vector2 _moveDirection = Vector2.up; // Default facing "up" (Z+)
 
     void Update()
     {
-        _moveDirection = move.action.ReadValue<Vector2>();
+        Vector2 input = move.action.ReadValue<Vector2>();
+        if (input.sqrMagnitude > 0.001f)
+        {
+            // Snap to cardinal directions only
+            if (Mathf.Abs(input.x) > Mathf.Abs(input.y))
+            {
+                _moveDirection = new Vector2(Mathf.Sign(input.x), 0f);
+            }
+            else
+            {
+                _moveDirection = new Vector2(0f, Mathf.Sign(input.y));
+            }
+        }
     }
 
     private void FixedUpdate()
     {
-        //Move the player based on input
-        Vector3 movement = new Vector3(_moveDirection.x, 0f, _moveDirection.y) * moveSpeed * Time.fixedDeltaTime;
-        rb.MovePosition(rb.position + movement);
+        // Always move forward in the facing direction
+        Vector3 forward = new(_moveDirection.x, 0f, _moveDirection.y);
+        rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * forward);
 
-        // Rotate to face movement direction if moving
+        // Rotate to face the current direction
         if (_moveDirection.sqrMagnitude > 0.001f)
         {
-            Vector3 lookDirection = new(_moveDirection.x, 0f, _moveDirection.y);
-            Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+            Quaternion targetRotation = Quaternion.LookRotation(forward, Vector3.up);
             rb.MoveRotation(targetRotation);
         }
     }
