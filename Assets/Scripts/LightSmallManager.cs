@@ -8,7 +8,7 @@ public class LightSmallManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Head"))
         {
             // Decrease corruption
             if (_corruptionManager != null)
