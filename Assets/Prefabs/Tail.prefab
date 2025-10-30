@@ -525,6 +525,7 @@ GameObject:
   - component: {fileID: 7839685651010970415}
   - component: {fileID: 7886203103758103714}
   - component: {fileID: 3391352188503440142}
+  - component: {fileID: 5757489077456012689}
   m_Layer: 0
   m_Name: Tail
   m_TagString: Tail
@@ -626,6 +627,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5757489077456012689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4925729784454797639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c680a94c9d78af3408a6f359bea2823f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  bloodTrailPrefab: {fileID: 802585751361501667, guid: bca08390bd99b6a4f87f420c3811a762, type: 3}
+  spawnInterval: 0.5
+  spawnDistanceBehindPlayer: 0.5
+  playerTransform: {fileID: 0}
 --- !u!1 &5751802375990541144
 GameObject:
   m_ObjectHideFlags: 0

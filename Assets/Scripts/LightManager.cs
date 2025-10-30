@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class LightSmallManager : MonoBehaviour
+public class LightManager : MonoBehaviour
 {
     [SerializeField] private CorruptionManager _corruptionManager;
     [SerializeField] private TailController _TailController;

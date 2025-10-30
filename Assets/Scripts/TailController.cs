@@ -53,6 +53,7 @@ public class TailController : MonoBehaviour
 
             // Set segment position
             Vector3 newPos = Vector3.Lerp(posA, posB, t);
+            newPos.y = 0.5f; 
             segments[i].position = newPos;
 
             // Calculate movement direction
@@ -83,6 +84,9 @@ public class TailController : MonoBehaviour
         {
             newPosition = segments[^1].position;
         }
+
+        // Set the y position low to the ground
+        newPosition.y = 0.5f;
 
         Quaternion randomRotation = UnityEngine.Random.rotation;
         float randomScale = UnityEngine.Random.Range(segmentMinSize, segmentMaxSize);
