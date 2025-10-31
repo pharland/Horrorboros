@@ -640,8 +640,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   bloodTrailPrefab: {fileID: 802585751361501667, guid: bca08390bd99b6a4f87f420c3811a762, type: 3}
+  poolSize: 50
   spawnInterval: 0.5
   spawnDistanceBehindPlayer: 0.5
+  decalLifetime: 10
 --- !u!1 &5751802375990541144
 GameObject:
   m_ObjectHideFlags: 0
