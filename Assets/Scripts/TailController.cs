@@ -85,23 +85,25 @@ public class TailController : MonoBehaviour
             newPosition = segments[^1].position;
         }
 
-        // Set the y position low to the ground
         newPosition.y = 0.5f;
 
+        // Create new segment with random rotation and scale
         Quaternion randomRotation = UnityEngine.Random.rotation;
         float randomScale = UnityEngine.Random.Range(segmentMinSize, segmentMaxSize);
 
+        // Set the parent to be the same as the player's transform
         Transform playerTransform = transform.parent;
         GameObject newSegment = Instantiate(segmentPrefab, newPosition, randomRotation, playerTransform);
         newSegment.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
+        // Add new segment to arrays
         Array.Resize(ref segments, segments.Length + 1);
         segments[^1] = newSegment.transform;
 
-        // Resize segmentDirections to match segments length
+        // Resize segmentDirections array
         Array.Resize(ref segmentDirections, segments.Length);
 
-        // Add the new segment's position to the history so LateUpdate can safely interpolate
+        // Initialize new direction
         _positionHistory.Add(newPosition);
     }
 }
