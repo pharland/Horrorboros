@@ -6,6 +6,14 @@ public class LightManager : MonoBehaviour
     [SerializeField] private TailController _TailController;
     [SerializeField] private float _amountToDecrease;
 
+    private SoundManager _soundManager;
+
+    private void Start()
+    {
+        // Find the SoundManager in the scene
+        _soundManager = FindFirstObjectByType<SoundManager>();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Head"))
@@ -28,6 +36,16 @@ public class LightManager : MonoBehaviour
             else
             {
                 Debug.LogWarning("TailController reference is missing!");
+            }
+            
+            // Play sound effect
+            if (_soundManager != null)
+            {
+                    _soundManager.LightPickupSFX();
+            }
+            else
+            {
+                Debug.LogWarning("SoundManager reference is missing!");
             }
 
             Destroy(gameObject);

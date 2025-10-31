@@ -9,9 +9,13 @@ public class BloodTrailManager : MonoBehaviour
     private Transform playerTransform;
     private float timer = 0f;
 
+    private SoundManager _soundManager;
+
     private void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Head").transform;
+
+        PlayTailSFX();
     }
 
     void Update()
@@ -38,5 +42,20 @@ public class BloodTrailManager : MonoBehaviour
         Vector3 spawnPosition = playerTransform.position - (playerTransform.forward * spawnDistanceBehindPlayer);
         spawnPosition.y = 0.004f; // Slightly above ground to avoid z-fighting
         Instantiate(bloodTrailPrefab, spawnPosition, Quaternion.Euler(90f, 0f, 0f));
+    }
+
+    /// <summary>
+    /// Play sfx when tail segment is added
+    /// </summary>
+    private void PlayTailSFX()
+    {
+        if (_soundManager == null)
+        {
+            _soundManager = FindFirstObjectByType<SoundManager>();
+        }
+        if (_soundManager != null)
+        {
+            _soundManager.TailSFX();
+        }
     }
 }
