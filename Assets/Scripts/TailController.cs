@@ -10,10 +10,12 @@ public class TailController : MonoBehaviour
     public float segmentSpacing; // Distance between segments
     public float segmentMinSize;
     public float segmentMaxSize;
-    public GameObject segmentPrefab;
+    public float segmentSpawnHeight;
+    public GameObject[] segmentPrefabs;
 
     private readonly List<Vector3> _positionHistory = new(); // History of leader tail positions
-    private Vector3[] segmentDirections;
+    private Vector3[] segmentDirections; // Directions of each segment
+    private int _lastPrefabIndex = -1; // To avoid spawning the same prefab consecutively
 
     void Start()
     {
@@ -53,7 +55,7 @@ public class TailController : MonoBehaviour
 
             // Set segment position
             Vector3 newPos = Vector3.Lerp(posA, posB, t);
-            newPos.y = 0.5f; 
+            newPos.y = segmentSpawnHeight; 
             segments[i].position = newPos;
 
             // Calculate movement direction
@@ -71,10 +73,11 @@ public class TailController : MonoBehaviour
     // Add a new segment to the tail
     public void AddSegment()
     {
-        if (segmentPrefab == null) return;
+        if (segmentPrefabs == null || segmentPrefabs.Length == 0) return;
 
         Vector3 newPosition;
 
+        // Determine spawn position for new segment
         if (segments.Length == 0)
         {
             float spawnDistance = firstSpawnDistance;
@@ -84,8 +87,16 @@ public class TailController : MonoBehaviour
         {
             newPosition = segments[^1].position;
         }
+        newPosition.y = segmentSpawnHeight;
 
-        newPosition.y = 0.5f;
+        // Select a random tail prefab index, but not the same as last time
+        int prefabIndex;
+        do
+        {
+            prefabIndex = UnityEngine.Random.Range(0, segmentPrefabs.Length);
+        } while (segmentPrefabs.Length > 1 && prefabIndex == _lastPrefabIndex);
+        _lastPrefabIndex = prefabIndex;
+        GameObject prefabToSpawn = segmentPrefabs[prefabIndex];
 
         // Create new segment with random rotation and scale
         Quaternion randomRotation = UnityEngine.Random.rotation;
@@ -93,7 +104,7 @@ public class TailController : MonoBehaviour
 
         // Set the parent to be the same as the player's transform
         Transform playerTransform = transform.parent;
-        GameObject newSegment = Instantiate(segmentPrefab, newPosition, randomRotation, playerTransform);
+        GameObject newSegment = Instantiate(prefabToSpawn, newPosition, randomRotation, playerTransform);
         newSegment.transform.localScale = new Vector3(randomScale, randomScale, randomScale);
 
         // Add new segment to arrays

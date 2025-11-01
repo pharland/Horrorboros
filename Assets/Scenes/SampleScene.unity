@@ -346,7 +346,11 @@ MonoBehaviour:
   segmentSpacing: 0.09
   segmentMinSize: 0.5
   segmentMaxSize: 1
-  segmentPrefab: {fileID: 4925729784454797639, guid: bc8d2b00315b56c418a9ce15f66d21d6, type: 3}
+  segmentSpawnHeight: 0.5
+  segmentPrefabs:
+  - {fileID: 4925729784454797639, guid: bc8d2b00315b56c418a9ce15f66d21d6, type: 3}
+  - {fileID: 4925729784454797639, guid: f9812d4ffa2d7b945927591e3a019ce0, type: 3}
+  - {fileID: 4925729784454797639, guid: 0b5d44b25aeef28448870b8b2180a5d3, type: 3}
 --- !u!114 &140169490
 MonoBehaviour:
   m_ObjectHideFlags: 0
