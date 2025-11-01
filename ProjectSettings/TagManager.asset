@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Tail
   - Head
+  - LightOrb
   layers:
   - Default
   - TransparentFX

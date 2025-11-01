@@ -41,14 +41,22 @@ public class LightManager : MonoBehaviour
             // Play sound effect
             if (_soundManager != null)
             {
-                    _soundManager.LightPickupSFX();
+                _soundManager.LightPickupSFX();
             }
             else
             {
                 Debug.LogWarning("SoundManager reference is missing!");
             }
 
-            Destroy(gameObject);
+            // Destroy parent object (and the orb itself)
+            if (transform.parent != null)
+            {
+                Destroy(transform.parent.gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }
