@@ -351,6 +351,9 @@ MonoBehaviour:
   - {fileID: 4925729784454797639, guid: bc8d2b00315b56c418a9ce15f66d21d6, type: 3}
   - {fileID: 4925729784454797639, guid: f9812d4ffa2d7b945927591e3a019ce0, type: 3}
   - {fileID: 4925729784454797639, guid: 0b5d44b25aeef28448870b8b2180a5d3, type: 3}
+  waveCurveIntensity: 0.3
+  waveCurveFrequency: -1
+  waveCurveSpeed: 5
 --- !u!114 &140169490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2209,7 +2212,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -2683,6 +2686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   moveSpeed: 5
+  turnSmoothTime: 0.15
   move: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   rb: {fileID: 140169488}
 --- !u!1 &2070866691
