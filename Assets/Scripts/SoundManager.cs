@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
@@ -182,6 +183,15 @@ public class SoundManager : MonoBehaviour
         foreach (AudioSource audioSource in allAudioSources)
         {
             audioSource.volume = volume;
+        }
+    }
+
+    internal void StopAllAudio()
+    {
+        AudioSource[] allAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            audioSource.Stop();
         }
     }
 }

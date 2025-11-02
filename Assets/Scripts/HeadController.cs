@@ -16,11 +16,8 @@ public class HeadController : MonoBehaviour
     {
         if (other.CompareTag("Tail"))
         {
-            // Trigger game over UI
+            // Trigger game over
             uiManager.EnableGameOverUI();
-
-            // Reload the current scene on collision with tail
-            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else if (other.CompareTag("LightOrb"))
         {
