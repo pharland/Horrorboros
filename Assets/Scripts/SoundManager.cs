@@ -9,6 +9,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource sfxSource;
     public AudioSource bloodSFXSource;
     public AudioClip backgroundMusic;
+    public AudioClip[] gameOverSFX;
     public AudioClip[] lightOrbSFX;
     public AudioClip[] tailSFX;
     public AudioClip[] bloodSFX;
@@ -192,6 +193,15 @@ public class SoundManager : MonoBehaviour
         foreach (AudioSource audioSource in allAudioSources)
         {
             audioSource.Stop();
+        }
+    }
+
+    internal void PlayGameOverSFX()
+    {
+        // Play each game over SFX simultaneously
+        foreach (AudioClip clip in gameOverSFX)
+        {
+            PlaySFX(clip);
         }
     }
 }

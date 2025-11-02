@@ -3817,6 +3817,7 @@ MonoBehaviour:
   scoreText: {fileID: 127353572}
   tailController: {fileID: 140169489}
   jumpAction: {fileID: -2099379676528639254, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  soundManager: {fileID: 2097057499}
 --- !u!1 &2030955707
 GameObject:
   m_ObjectHideFlags: 0
@@ -4081,6 +4082,8 @@ MonoBehaviour:
   sfxSource: {fileID: 140169491}
   bloodSFXSource: {fileID: 1247162112}
   backgroundMusic: {fileID: 8300000, guid: c05eef92010872d4caf22ce2f5a226ea, type: 3}
+  gameOverSFX:
+  - {fileID: 8300000, guid: 25bb4aecdb2e823419f4b5d541c1f0c0, type: 3}
   lightOrbSFX:
   - {fileID: 8300000, guid: f9bf357c26a7a5c48b5f69051a24350a, type: 3}
   tailSFX:

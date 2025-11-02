@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
 
     private bool isPaused = false;
 
+    public SoundManager soundManager;
+
     public void EnableGameOverUI()
     {
         // Show game over screen and calculate score
@@ -23,15 +25,9 @@ public class UIManager : MonoBehaviour
         timeText.text = "Time: " + Time.timeSinceLevelLoad.ToString("F2") + "s = " + Mathf.FloorToInt(Time.timeSinceLevelLoad * 10) + " points";
         scoreText.text = "Score: " + ((tailController.segments.Length * 100) + Mathf.FloorToInt(Time.timeSinceLevelLoad * 10));
 
-        // Stop all sound effects
-        SoundManager soundManager = FindFirstObjectByType<SoundManager>();
-        if (soundManager != null)
-        {
-            soundManager.StopAllAudio();
-        } else
-        {
-            Debug.Log("SoundManager not found");
-        }
+        // Stop all sound effects and play game over sound effect
+        soundManager.StopAllAudio();
+        soundManager.PlayGameOverSFX();
 
         // Pause the game
         Time.timeScale = 0f;
