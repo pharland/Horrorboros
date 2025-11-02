@@ -11,6 +11,8 @@ public class LightManager : MonoBehaviour
     private void Start()
     {
         _soundManager = FindFirstObjectByType<SoundManager>();
+        _corruptionManager = FindFirstObjectByType<CorruptionManager>();
+        _TailController = FindFirstObjectByType<TailController>();
 
         // Set this orb's SFX volume to match the audio slider
         var orbAudio = GetComponent<AudioSource>();
