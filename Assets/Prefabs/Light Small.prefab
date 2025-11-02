@@ -174,6 +174,7 @@ GameObject:
   - component: {fileID: 8423391258498215268}
   - component: {fileID: 7788880455657844773}
   - component: {fileID: 6047380919545266246}
+  - component: {fileID: 1954665576500007114}
   m_Layer: 0
   m_Name: Orb
   m_TagString: LightOrb
@@ -300,7 +301,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: f841038faf73a0a41908ad254cdd1171, type: 3}
+  m_Resource: {fileID: 8300000, guid: 09a563604a21e1e4fa738467b38830fe, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -386,6 +387,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!95 &1954665576500007114
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5605930788282273841}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 54da00b239ae435409a6c437d9602e98, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &7994324515800710155
 PrefabInstance:
   m_ObjectHideFlags: 0
