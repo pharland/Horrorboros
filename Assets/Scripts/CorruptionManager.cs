@@ -7,14 +7,21 @@ public class CorruptionManager : MonoBehaviour
 {
     public Slider corruptionBar;
     public float corruptionSpeed;
-    public float musicChangeOnCorruptionPercent; // Percentage of corruption (0-1) at which music changes start
-    public float bgmPitchModifierMax; // Maximum pitch increase for background music when at max corruption
-    public float bgmVolumeModifierMax; // Maximum volume increase for background music when at max corruption
+    public float musicChangeOnCorruptionPercent;
+    public float bgmPitchModifierMax;
+    public float bgmVolumeModifierMax;
 
-    // Reference to SoundManager (assign in Inspector or find at runtime)
     public SoundManager soundManager;
+    public UIManager uiManager;
+
+    [Header("Corruption Bar Colors (Editable in Inspector)")]
+    public Color corruptionStartColor = Color.red;
+    public Color corruptionEndColor = Color.yellow;
+
+    [SerializeField] private Image corruptionBarFill; // Assign the fill Image in Inspector
 
     private float initialMusicVolume;
+    private bool gameOverTriggered = false;
 
     internal void DecreaseCorruption(float amountToDecrease)
     {
@@ -40,17 +47,25 @@ public class CorruptionManager : MonoBehaviour
         {
             corruptionBar.value += Time.deltaTime * corruptionSpeed;
         }
-        else
+        else if (!gameOverTriggered)
         {
-            // Game Over
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            uiManager.EnableGameOverUI();
+            gameOverTriggered = true;
         }
 
-        // Update music pitch and volume based on corruption (exponential increase after 50%)
+        float corruptionPercent = corruptionBar.value / corruptionBar.maxValue;
+
+        // Transition slider color from 50% corruption onwards
+        if (corruptionBarFill != null)
+        {
+            float lerpPercent = Mathf.InverseLerp(0.5f, 1f, corruptionPercent);
+            corruptionBarFill.color = Color.Lerp(corruptionStartColor, corruptionEndColor, lerpPercent);
+        }
+
+        // Update music pitch and volume based on corruption
         if (soundManager != null && soundManager.musicSource != null)
         {
-            float corruptionPercent = corruptionBar.value / corruptionBar.maxValue;
-            float sliderVolume = soundManager.musicVolume; // Always use slider value
+            float sliderVolume = soundManager.musicVolume;
 
             if (corruptionPercent < musicChangeOnCorruptionPercent)
             {

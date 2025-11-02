@@ -5,13 +5,15 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float turnSmoothTime = 0.15f; // How quickly to turn
+    public float corruptionSpeedMultiplier = 3f;
+    public float turnSmoothTime = 0.15f;
     public InputActionReference move;
     public Rigidbody rb;
+    public CorruptionManager corruptionManager; // Assign in Inspector
 
-    private Vector2 _moveDirection = Vector2.up; // Target direction for smooth turning
-    private Vector2 _currentDirection = Vector2.up; // Smoothed direction for turning
-    private Vector2 _lastInputDirection = Vector2.up; // Last input direction
+    private Vector2 _moveDirection = Vector2.up;
+    private Vector2 _currentDirection = Vector2.up;
+    private Vector2 _lastInputDirection = Vector2.up;
 
     void Update()
     {
@@ -28,7 +30,6 @@ public class PlayerController : MonoBehaviour
                 proposedDirection = new Vector2(0f, Mathf.Sign(input.y));
             }
 
-            // Only update if not opposite of last input direction
             if (proposedDirection != -_lastInputDirection)
             {
                 _moveDirection = proposedDirection;
@@ -36,7 +37,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        // Smoothly curve towards the target direction
         _currentDirection = Vector2.Lerp(_currentDirection, _moveDirection, Time.deltaTime / turnSmoothTime);
         if (_currentDirection.sqrMagnitude > 0.001f)
             _currentDirection.Normalize();
@@ -44,11 +44,15 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Move forward in the current direction
-        Vector3 forward = new(_currentDirection.x, 0f, _currentDirection.y);
-        rb.MovePosition(rb.position + moveSpeed * Time.fixedDeltaTime * forward);
+        float corruptionPercent = corruptionManager != null && corruptionManager.corruptionBar != null
+            ? corruptionManager.corruptionBar.value / corruptionManager.corruptionBar.maxValue
+            : 0f;
+        float speedMultiplier = Mathf.Lerp(1f, corruptionSpeedMultiplier, corruptionPercent);
+        float effectiveMoveSpeed = moveSpeed * speedMultiplier;
 
-        // When turning, smoothly rotate towards movement direction
+        Vector3 forward = new(_currentDirection.x, 0f, _currentDirection.y);
+        rb.MovePosition(rb.position + effectiveMoveSpeed * Time.fixedDeltaTime * forward);
+
         if (_currentDirection.sqrMagnitude > 0.001f)
         {
             Quaternion targetRotation = Quaternion.LookRotation(forward, Vector3.up);
@@ -56,7 +60,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    // Game Over when colliding with tail
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Tail"))
