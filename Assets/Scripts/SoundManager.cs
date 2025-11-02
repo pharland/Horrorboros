@@ -24,11 +24,25 @@ public class SoundManager : MonoBehaviour
     private int lastTailSFXIndex = -1; // To avoid repeating the last played sound effect
     private int lastBloodSFXIndex = -1; // To avoid repeating the last played sound effect
 
-    public float musicVolume = 1f;
+    public float musicVolume = 0.1f;
 
     void Start()
     {
         PlayMusic(backgroundMusic);
+
+        // Set SFX and blood SFX volume to 0.5, leave musicSource unchanged
+        if (sfxSource != null)
+            sfxSource.volume = 0.08f;
+        if (bloodSFXSource != null)
+            bloodSFXSource.volume = 0.08f;
+
+        // If you have other SFX AudioSources (e.g., pooled or on objects), set them too
+        AudioSource[] allAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            if (audioSource != musicSource)
+                audioSource.volume = 0.08f;
+        }
     }
 
     /// <summary>
@@ -122,6 +136,7 @@ public class SoundManager : MonoBehaviour
     {
         if (clips == null || clips.Length == 0) return;
 
+        // Select a random index different from the last played
         int index;
         if (clips.Length == 1)
         {
@@ -135,6 +150,7 @@ public class SoundManager : MonoBehaviour
             } while (index == lastPlayedIndex);
         }
 
+        // Update last played index and play
         lastPlayedIndex = index;
         PlaySFX(clips[index]);
     }
@@ -167,10 +183,12 @@ public class SoundManager : MonoBehaviour
         PlayBloodSFX(clips[index]);
     }
 
-    //Adjust volume based on slider
+    /// <summary>
+    /// Adjust volume based on slider
+    /// </summary>
     public void AdjustVolume()
     {
-        float sliderValue = volumeSlider.value; // 0 to 1
+        float sliderValue = volumeSlider.value;
 
         // Convert slider value to decibels
         float dB = Mathf.Lerp(-40f, 0f, sliderValue);
