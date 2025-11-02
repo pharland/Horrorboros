@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SoundManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class SoundManager : MonoBehaviour
     public AudioClip[] tailSFX;
     public AudioClip[] bloodSFX;
     public float bloodSFXinterval; // Interval in seconds for blood sfx loop
+    public Slider volumeSlider;
 
     [Header("Blood SFX Pitch Range")]
     public float bloodSFXMinPitch;
@@ -19,6 +21,8 @@ public class SoundManager : MonoBehaviour
     private int lastLightOrbSFXIndex = -1; // To avoid repeating the last played sound effect
     private int lastTailSFXIndex = -1; // To avoid repeating the last played sound effect
     private int lastBloodSFXIndex = -1; // To avoid repeating the last played sound effect
+
+    public float musicVolume = 1f;
 
     void Start()
     {
@@ -159,5 +163,25 @@ public class SoundManager : MonoBehaviour
         // Update last played index and play
         lastPlayedIndex = index;
         PlayBloodSFX(clips[index]);
+    }
+
+    //Adjust volume based on slider
+    public void AdjustVolume()
+    {
+        float sliderValue = volumeSlider.value; // 0 to 1
+
+        // Convert slider value to decibels
+        float dB = Mathf.Lerp(-40f, 0f, sliderValue);
+        float volume = Mathf.Pow(10f, dB / 20f);
+
+        // Store the music volume for corruption adjustments
+        musicVolume = volume;
+
+        // Update all audio source volumes
+        AudioSource[] allAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
+        foreach (AudioSource audioSource in allAudioSources)
+        {
+            audioSource.volume = volume;
+        }
     }
 }

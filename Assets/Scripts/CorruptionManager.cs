@@ -50,20 +50,20 @@ public class CorruptionManager : MonoBehaviour
         if (soundManager != null && soundManager.musicSource != null)
         {
             float corruptionPercent = corruptionBar.value / corruptionBar.maxValue;
+            float sliderVolume = soundManager.musicVolume; // Always use slider value
 
             if (corruptionPercent < musicChangeOnCorruptionPercent)
             {
                 soundManager.musicSource.pitch = 1f;
-                soundManager.musicSource.volume = initialMusicVolume;
+                soundManager.musicSource.volume = sliderVolume;
             }
             else
             {
-                // Remap 0.5-1.0 to 0-1 for exponential curve
                 float mappedPercent = (corruptionPercent - musicChangeOnCorruptionPercent) * 2f;
                 float expPitch = Mathf.Lerp(1f, bgmPitchModifierMax, Mathf.Pow(mappedPercent, 2f));
-                float expVolume = Mathf.Lerp(initialMusicVolume, bgmVolumeModifierMax, Mathf.Pow(mappedPercent, 2f));
+                float expVolume = Mathf.Lerp(1f, bgmVolumeModifierMax, Mathf.Pow(mappedPercent, 2f));
                 soundManager.musicSource.pitch = expPitch;
-                soundManager.musicSource.volume = expVolume;
+                soundManager.musicSource.volume = sliderVolume * expVolume;
             }
         }
     }

@@ -10,8 +10,14 @@ public class LightManager : MonoBehaviour
 
     private void Start()
     {
-        // Find the SoundManager in the scene
         _soundManager = FindFirstObjectByType<SoundManager>();
+
+        // Set this orb's SFX volume to match the audio slider
+        var orbAudio = GetComponent<AudioSource>();
+        if (_soundManager != null && orbAudio != null)
+        {
+            orbAudio.volume = _soundManager.volumeSlider.value;
+        }
     }
 
     private void OnTriggerEnter(Collider other)
