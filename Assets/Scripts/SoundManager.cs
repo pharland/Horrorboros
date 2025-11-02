@@ -26,6 +26,17 @@ public class SoundManager : MonoBehaviour
 
     public float musicVolume = 0.1f;
 
+    private const string VolumeSliderKey = "AudioSliderValue";
+
+    void Awake()
+    {
+        // Load saved slider value (default to 1 if not set)
+        float savedSliderValue = PlayerPrefs.GetFloat(VolumeSliderKey, 1f);
+        if (volumeSlider != null)
+            volumeSlider.value = savedSliderValue;
+        AdjustVolume();
+    }
+
     void Start()
     {
         PlayMusic(backgroundMusic);
@@ -189,6 +200,10 @@ public class SoundManager : MonoBehaviour
     public void AdjustVolume()
     {
         float sliderValue = volumeSlider.value;
+
+        // Save slider value
+        PlayerPrefs.SetFloat(VolumeSliderKey, sliderValue);
+        PlayerPrefs.Save();
 
         // Convert slider value to decibels
         float dB = Mathf.Lerp(-40f, 0f, sliderValue);

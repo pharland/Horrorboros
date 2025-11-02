@@ -2106,8 +2106,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -2678,12 +2678,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 478766935}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 25.28264, y: 25.28264, z: 25.28264}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1911024691}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &510311438 stripped
 Transform:
@@ -4608,6 +4608,9 @@ MonoBehaviour:
   corruptionStartColor: {r: 0.33962262, g: 0.03109895, b: 0.011213961, a: 1}
   corruptionEndColor: {r: 0.61431146, g: 0.6415094, b: 0.16642934, a: 1}
   corruptionBarFill: {fileID: 367065361}
+  postProcessVolume: {fileID: 832575518}
+  minVignetteIntensity: 0.4
+  maxVignetteIntensity: 0.6
 --- !u!114 &971673699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8209,6 +8212,7 @@ Transform:
   - {fileID: 1631164969}
   - {fileID: 956919952}
   - {fileID: 808137863}
+  - {fileID: 478766939}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1971781700 stripped
@@ -8490,7 +8494,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   moveSpeed: 5
-  corruptionSpeedMultiplier: 3
+  corruptionSpeedMultiplier: 2
   turnSmoothTime: 0.15
   move: {fileID: -1680190386980627800, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   rb: {fileID: 140169488}
@@ -9250,7 +9254,6 @@ SceneRoots:
   - {fileID: 1052731851}
   - {fileID: 2097057500}
   - {fileID: 832575519}
-  - {fileID: 478766939}
   - {fileID: 2018984496}
   - {fileID: 949395262}
   - {fileID: 2030955708}
