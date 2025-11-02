@@ -10,14 +10,21 @@ public class HeadController : MonoBehaviour
     [SerializeField] private float FovBaseIncrease = 2f;
     [SerializeField] private float FovMax = 70f;
 
+    [SerializeField] private UIManager uiManager;
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Tail"))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            // Trigger game over UI
+            uiManager.EnableGameOverUI();
+
+            // Reload the current scene on collision with tail
+            //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
         else if (other.CompareTag("LightOrb"))
         {
+            // Destroy the light orb and play a particle effect
             if (lightOrbParticleEffectPrefab != null)
             {
                 ParticleSystem particleEffect = Instantiate(
@@ -29,6 +36,7 @@ public class HeadController : MonoBehaviour
                 Destroy(particleEffect.gameObject, particleEffect.main.duration + particleEffect.main.startLifetime.constantMax);
             }
 
+            // Screenshake
             if (impulseSource != null)
             {
                 impulseSource.GenerateImpulse();
