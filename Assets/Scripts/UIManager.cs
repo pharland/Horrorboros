@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 public class UIManager : MonoBehaviour
 {
     public GameObject pauseMenu;
+    public GameObject tutorialScreen;
     public GameObject gameOverScreen;
     public GameObject warningScreen;
     public TextMeshProUGUI segmentsText;
@@ -18,6 +19,19 @@ public class UIManager : MonoBehaviour
     private bool isGameOver = false;
 
     public SoundManager soundManager;
+
+    
+    private void Start()
+    {
+        // one frame after the game starts, show tutorial screen
+        Invoke(nameof(ShowTutorialScreen), 0.1f);
+    }
+
+    private void ShowTutorialScreen()
+    {
+        tutorialScreen.SetActive(true);
+        PauseGame();
+    }
 
     public void EnableGameOverUI()
     {
@@ -57,8 +71,9 @@ public class UIManager : MonoBehaviour
             }
             else
             {
-                // Hide warning screen
+                // Hide screens
                 warningScreen.SetActive(false);
+                tutorialScreen.SetActive(false);
             }
         }
     }
