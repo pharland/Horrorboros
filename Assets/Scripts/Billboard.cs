@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class Billboard : MonoBehaviour
 {
-    public Transform camera;
+    public Transform cam;
 
     void LateUpdate()
     {
-        transform.LookAt(transform.position + camera.forward);
+        // Make the object face the camera
+        transform.LookAt(transform.position + cam.forward);
     }
 }
