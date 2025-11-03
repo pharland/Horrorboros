@@ -4,14 +4,23 @@ public class LightOrbSpawner : MonoBehaviour
 {
     public GameObject lightOrbPrefab;
     public GameObject spawnArea;
+    public LightManager tutorialOrbManager;
     public float spawnInterval = 5f;
     public int maxAttempts = 20;
     public float minDistance = 0.1f;
 
     private float timer;
 
+
     private void Update()
     {
+        // Prevent spawning until the tutorial orb has been collected/destroyed
+        if (tutorialOrbManager != null && tutorialOrbManager.isTutorialOrb && tutorialOrbManager.gameObject != null)
+        {
+            // Tutorial orb still exists, do not spawn
+            return;
+        }
+
         // Update timer and check if it's time to spawn a new orb
         timer += Time.deltaTime;
         if (timer >= spawnInterval)
