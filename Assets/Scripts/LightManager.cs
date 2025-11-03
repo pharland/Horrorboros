@@ -5,12 +5,15 @@ public class LightManager : MonoBehaviour
     [SerializeField] private CorruptionManager _corruptionManager;
     [SerializeField] private TailController _TailController;
     [SerializeField] private float _amountToDecrease;
+    public bool isTutorialOrb = false;
 
     private SoundManager _soundManager;
+    private UIManager _UIManager;
 
     private void Start()
     {
         _soundManager = FindFirstObjectByType<SoundManager>();
+        _UIManager = FindFirstObjectByType<UIManager>();
         _corruptionManager = FindFirstObjectByType<CorruptionManager>();
         _TailController = FindFirstObjectByType<TailController>();
 
@@ -54,6 +57,12 @@ public class LightManager : MonoBehaviour
             else
             {
                 Debug.LogWarning("SoundManager reference is missing!");
+            }
+
+            // Trigger tutorial message if this is a tutorial orb
+            if (isTutorialOrb && _corruptionManager != null)
+            {
+                _UIManager.EnableWarningUI();
             }
 
             // Destroy parent object (and the orb itself)
