@@ -9,13 +9,15 @@ public class SoundManager : MonoBehaviour
     public AudioSource sfxSource;
     public AudioSource bloodSFXSource;
     public AudioSource crawlingSFXSource;
+    public AudioSource pantingSFXSource;
     public AudioClip backgroundMusic;
     public AudioClip[] gameOverSFX;
     public AudioClip[] lightOrbSFX;
     public AudioClip[] tailSFX;
     public AudioClip[] bloodSFX;
     public AudioClip[] crawlingSFX;
-    public float bloodSFXinterval; // Interval in seconds for blood sfx loop
+    public AudioClip pantingSFX;
+    public float bloodSFXInterval; // Interval in seconds for blood sfx loop
     public Slider volumeSlider;
 
     [Header("Blood SFX Pitch Range")]
@@ -61,6 +63,14 @@ public class SoundManager : MonoBehaviour
         if (crawlingSFXSource != null && crawlingSFX != null && crawlingSFX.Length > 0)
         {
             StartCoroutine(CrawlingSFXCoroutine());
+        }
+
+        // Start panting loop
+        if (pantingSFXSource != null && pantingSFX != null)
+        {
+            pantingSFXSource.clip = pantingSFX;
+            pantingSFXSource.loop = true;
+            pantingSFXSource.Play();
         }
     }
 
@@ -135,7 +145,7 @@ public class SoundManager : MonoBehaviour
         while (true)
         {
             PlayRandomBloodSFX(bloodSFX, ref lastBloodSFXIndex);
-            yield return new WaitForSeconds(bloodSFXinterval);
+            yield return new WaitForSeconds(bloodSFXInterval);
         }
     }
 
