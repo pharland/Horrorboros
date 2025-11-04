@@ -8,11 +8,13 @@ public class SoundManager : MonoBehaviour
     public AudioSource musicSource;
     public AudioSource sfxSource;
     public AudioSource bloodSFXSource;
+    public AudioSource crawlingSFXSource;
     public AudioClip backgroundMusic;
     public AudioClip[] gameOverSFX;
     public AudioClip[] lightOrbSFX;
     public AudioClip[] tailSFX;
     public AudioClip[] bloodSFX;
+    public AudioClip[] crawlingSFX;
     public float bloodSFXinterval; // Interval in seconds for blood sfx loop
     public Slider volumeSlider;
 
@@ -23,10 +25,12 @@ public class SoundManager : MonoBehaviour
     private int lastLightOrbSFXIndex = -1; // To avoid repeating the last played sound effect
     private int lastTailSFXIndex = -1; // To avoid repeating the last played sound effect
     private int lastBloodSFXIndex = -1; // To avoid repeating the last played sound effect
+    private int lastCrawlingSFXIndex = -1; // To avoid repeating the last played crawling SFX
 
     public float musicVolume = 0.1f;
 
     private const string VolumeSliderKey = "AudioSliderValue";
+    private Coroutine bloodSFXCoroutine;
 
     void Awake()
     {
@@ -41,18 +45,22 @@ public class SoundManager : MonoBehaviour
     {
         PlayMusic(backgroundMusic);
 
-        // Set SFX and blood SFX volume to 0.5, leave musicSource unchanged
         if (sfxSource != null)
             sfxSource.volume = 0.08f;
         if (bloodSFXSource != null)
             bloodSFXSource.volume = 0.08f;
 
-        // If you have other SFX AudioSources (e.g., pooled or on objects), set them too
         AudioSource[] allAudioSources = FindObjectsByType<AudioSource>(FindObjectsSortMode.None);
         foreach (AudioSource audioSource in allAudioSources)
         {
             if (audioSource != musicSource)
                 audioSource.volume = 0.08f;
+        }
+
+        // Start crawling SFX loop
+        if (crawlingSFXSource != null && crawlingSFX != null && crawlingSFX.Length > 0)
+        {
+            StartCoroutine(CrawlingSFXCoroutine());
         }
     }
 
@@ -112,8 +120,9 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     public void BloodSFXLoop()
     {
-        StopAllCoroutines();
-        StartCoroutine(BloodSFXCoroutine());
+        if (bloodSFXCoroutine != null)
+            StopCoroutine(bloodSFXCoroutine);
+        bloodSFXCoroutine = StartCoroutine(BloodSFXCoroutine());
     }
 
     /// <summary>
@@ -135,7 +144,11 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     public void StopBloodSFXLoop()
     {
-        StopAllCoroutines();
+        if (bloodSFXCoroutine != null)
+        {
+            StopCoroutine(bloodSFXCoroutine);
+            bloodSFXCoroutine = null;
+        }
     }
 
     /// <summary>
@@ -235,6 +248,36 @@ public class SoundManager : MonoBehaviour
         foreach (AudioClip clip in gameOverSFX)
         {
             PlaySFX(clip);
+        }
+    }
+
+    /// <summary>
+    /// Coroutine to play crawling SFX clips at random, never repeating the last played
+    /// </summary>
+    private System.Collections.IEnumerator CrawlingSFXCoroutine()
+    {
+        while (true)
+        {
+            // Select a random index different from the last played
+            int index;
+            if (crawlingSFX.Length == 1)
+            {
+                index = 0;
+            }
+            else
+            {
+                do
+                {
+                    index = UnityEngine.Random.Range(0, crawlingSFX.Length);
+                } while (index == lastCrawlingSFXIndex);
+            }
+            lastCrawlingSFXIndex = index;
+
+            crawlingSFXSource.clip = crawlingSFX[index];
+            crawlingSFXSource.Play();
+
+            // Wait for the clip to finish before playing the next one
+            yield return new WaitForSeconds(crawlingSFXSource.clip.length);
         }
     }
 }
