@@ -10903,7 +10903,7 @@ MonoBehaviour:
   bgmVolumeModifierMax: 1.5
   soundManager: {fileID: 2097057499}
   uiManager: {fileID: 2018984497}
-  corruptionStartColor: {r: 0.33962262, g: 0.03109895, b: 0.011213961, a: 1}
+  corruptionStartColor: {r: 0.9622642, g: 0.057277635, b: 0, a: 1}
   corruptionEndColor: {r: 0.61431146, g: 0.6415094, b: 0.16642934, a: 1}
   corruptionBarFill: {fileID: 367065361}
   postProcessVolume: {fileID: 832575518}
