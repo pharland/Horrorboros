@@ -37,7 +37,7 @@ public class SoundManager : MonoBehaviour
     void Awake()
     {
         // Load saved slider value (default to 1 if not set)
-        float savedSliderValue = PlayerPrefs.GetFloat(VolumeSliderKey, 1f);
+        float savedSliderValue = PlayerPrefs.GetFloat(VolumeSliderKey, 0.7f);
         if (volumeSlider != null)
         {
             volumeSlider.value = savedSliderValue;
