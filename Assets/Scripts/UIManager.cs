@@ -23,8 +23,13 @@ public class UIManager : MonoBehaviour
     
     private void Start()
     {
-        // one frame after the game starts, show tutorial screen
-        Invoke(nameof(ShowTutorialScreen), 0.1f);
+        // one frame after the game starts, show tutorial screen if they haven't seen it before
+        if (PlayerPrefs.GetInt("SeenTutorial", 0) == 0)
+        {
+            Invoke(nameof(ShowTutorialScreen), 0.1f);
+            PlayerPrefs.SetInt("SeenTutorial", 1);
+            PlayerPrefs.Save();
+        }
     }
 
     private void ShowTutorialScreen()
@@ -82,5 +87,12 @@ public class UIManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0f;
+    }
+
+    // Function to clear all PlayerPrefs (for tutorial and audio saves)
+    public void ClearAllPlayerPrefs()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
     }
 }

@@ -59,10 +59,15 @@ public class LightManager : MonoBehaviour
                 Debug.LogWarning("SoundManager reference is missing!");
             }
 
-            // Trigger tutorial message if this is a tutorial orb
+            // Trigger tutorial message if this is a tutorial orb, but only the first time
             if (isTutorialOrb && _corruptionManager != null)
             {
-                _UIManager.EnableWarningUI();
+                if (PlayerPrefs.GetInt("HasSeenWarning", 0) == 0)
+                {
+                    _UIManager.EnableWarningUI();
+                    PlayerPrefs.SetInt("HasSeenWarning", 1);
+                    PlayerPrefs.Save();
+                }
             }
 
             // Destroy parent object (and the orb itself)
