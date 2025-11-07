@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
         isGameOver = true;
         segmentsText.text = "Segments: " + tailController.segments.Length + " = " + tailController.segments.Length * 100 + " points";
         timeText.text = "Time: " + Time.timeSinceLevelLoad.ToString("F2") + "s = " + Mathf.FloorToInt(Time.timeSinceLevelLoad * 10) + " points";
-        scoreText.text = "Score: " + ((tailController.segments.Length * 100) + Mathf.FloorToInt(Time.timeSinceLevelLoad * 10));
+        scoreText.text = ((tailController.segments.Length * 100) + Mathf.FloorToInt(Time.timeSinceLevelLoad * 10)).ToString();
 
         // Stop all sound effects and play game over sound effect
         soundManager.StopAllAudio();
