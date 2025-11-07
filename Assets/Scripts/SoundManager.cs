@@ -39,7 +39,10 @@ public class SoundManager : MonoBehaviour
         // Load saved slider value (default to 1 if not set)
         float savedSliderValue = PlayerPrefs.GetFloat(VolumeSliderKey, 1f);
         if (volumeSlider != null)
+        {
             volumeSlider.value = savedSliderValue;
+            volumeSlider.onValueChanged.AddListener(delegate { AdjustVolume(); });
+        }
         AdjustVolume();
     }
 
@@ -240,6 +243,12 @@ public class SoundManager : MonoBehaviour
         foreach (AudioSource audioSource in allAudioSources)
         {
             audioSource.volume = volume;
+        }
+
+        // Explicitly update musicSource volume
+        if (musicSource != null)
+        {
+            musicSource.volume = volume;
         }
     }
 

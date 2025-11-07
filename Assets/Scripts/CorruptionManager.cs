@@ -83,6 +83,7 @@ public class CorruptionManager : MonoBehaviour
         // Update music pitch and volume based on corruption
         if (soundManager != null && soundManager.musicSource != null)
         {
+            // Always use the latest musicVolume from SoundManager (updated by slider/UI)
             float sliderVolume = soundManager.musicVolume;
 
             if (corruptionPercent < musicChangeOnCorruptionPercent)
